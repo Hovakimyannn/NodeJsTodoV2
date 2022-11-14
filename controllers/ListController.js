@@ -2,47 +2,51 @@
 
 const dataBaseManager = require('../database/DatabaseManager.js');
 
-async function get() {
+async function get(req, res) {
     try {
-        return await dataBaseManager.getList();
+        res.json(await dataBaseManager.get());
     } catch (e) {
-        throw e;
+        res.status(500).json('Something went wrong!');
     }
 }
 
-async function getById(id) {
+async function getById(req, res) {
     try {
-        return await dataBaseManager.getListById(id);
+        res.json(await dataBaseManager.getById(req.params.id));
     } catch (e) {
-        console.log('list controller getById')
-        throw e;
+        res.status(500).json('Something went wrong!');
     }
 }
 
-async function create(data) {
+async function create(req, res) {
+    const data = req.body;
+    if (data.status === undefined) {
+        data.status = false;
+    }
+    if (Object.keys(data).length === 0) {
+        return res.status(404).json('error: empty body');
+    }
     try {
-        if (data.status === undefined) {
-            data.status = false;
-        }
-        return await dataBaseManager.createList(data);
+        await dataBaseManager.create(data)
+        res.status(201).json('todo created');
     } catch (e) {
-        throw e;
+        res.status(500).json('Something went wrong!');
     }
 }
 
-async function update(data, id) {
+async function update(req, res) {
     try {
-        return await dataBaseManager.updateList(data, id);
+        res.json(await dataBaseManager.update(req.body, req.params.id));
     } catch (e) {
-        throw e;
+        res.status(500).json('Something went wrong!');
     }
 }
 
-async function destroy(id) {
+async function destroy(req, res) {
     try {
-        return await dataBaseManager.destroyList(id);
+        res.json(await dataBaseManager.destroy(req.params.id));
     } catch (e) {
-        throw e;
+        res.status(500).json('Something went wrong!');
     }
 }
 

@@ -4,7 +4,6 @@ const config = require('../config/config.js');
 const db = config.db;
 const {Schema} = db.Schema;
 
-(async () => await mongoose.connect(config.uri))();
 const todoSchema = new Schema({
     todoContent: {
         type: String,

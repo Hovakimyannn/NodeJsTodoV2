@@ -1,56 +1,53 @@
 "use strict"
 
-const {
-    create,
-    read,
-    update,
-    destroy
-} = require('../database/MongoDB/Mongodb.js');
+const db = require('../database/MongoDB/Mongodb.js');
 
-async function getList() {
+
+
+async function get() {
     try {
-        return await read();
+        return await db.read();
     } catch (e) {
         throw e;
     }
 }
 
-async function getListById(id) {
+async function getById(id) {
     try {
-        return await read(id);
+        return await db.read(id);
     } catch (e) {
         throw e;
     }
 }
 
-async function createList(data) {
+async function create(data) {
     try {
-        return await create(data);
+        return await db.create(data);
     } catch (e) {
         throw e;
     }
 }
 
-async function updateList(data, id) {
+async function update(data, id) {
     try {
-        return await update(data, id);
+        return await db.update(data, id);
     } catch (e) {
         throw e;
     }
 }
 
-async function destroyList(id) {
+async function destroy(id) {
     try {
-        return await destroy(id);
+        return await db.destroy(id);
     } catch (e) {
         throw e;
     }
 }
 
 module.exports = {
-    getList,
-    getListById,
-    createList,
-    updateList,
-    destroyList
+    get,
+    getById,
+    create,
+    update,
+    destroy
 }

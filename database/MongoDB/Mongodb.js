@@ -3,7 +3,7 @@
 const config = require('../../config/config.js');
 const ObjectId = config.ObjectId;
 const MongoClient = config.MongoClient;
-
+let model = undefined;
 /**
  * @param data
  *
