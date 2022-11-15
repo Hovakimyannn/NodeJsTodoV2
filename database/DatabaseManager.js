@@ -1,53 +1,63 @@
-"use strict"
+'use strict'
 
-const db = require('../database/MongoDB/Mongodb.js');
+const Database = require('../database/MongoDB/Mongodb.js');
+const config = require("../config/config");
 
+class DatabaseManager {
+    constructor(model) {
+        this.database = new Database(model);
+    }
 
+    static connect() {
+        config.DB_DATABASE.connect(config.URI);
+        const db = config.DB_DATABASE.connection;
+        db.on("error", console.error.bind(console, `${config.DB_CONNECTION_NAME} connection error: `));
+        db.once("open", function () {
+            console.log(`${config.DB_CONNECTION_NAME} connected successfully`);
+        });
+    }
 
-async function get() {
-    try {
-        return await db.read();
-    } catch (e) {
-        throw e;
+    async get() {
+        try {
+            return await this.database.read();
+        } catch (e) {
+            console.log(e);
+            throw e;
+        }
+    }
+
+    async getByCredentials(credentials) {
+        try {
+            return await this.database.read(credentials);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async create(data) {
+        try {
+            return await this.database.create(data);
+        } catch (e) {
+            console.log(e);
+            throw e;
+        }
+    }
+
+    async update(data, id) {
+        try {
+            return await this.database.update(data, id);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async destroy(id) {
+        try {
+            return await this.database.destroy(id);
+        } catch (e) {
+            throw e;
+        }
     }
 }
 
-async function getById(id) {
-    try {
-        return await db.read(id);
-    } catch (e) {
-        throw e;
-    }
-}
-
-async function create(data) {
-    try {
-        return await db.create(data);
-    } catch (e) {
-        throw e;
-    }
-}
-
-async function update(data, id) {
-    try {
-        return await db.update(data, id);
-    } catch (e) {
-        throw e;
-    }
-}
-
-async function destroy(id) {
-    try {
-        return await db.destroy(id);
-    } catch (e) {
-        throw e;
-    }
-}
-
-module.exports = {
-    get,
-    getById,
-    create,
-    update,
-    destroy
-}
+module.exports = DatabaseManager

@@ -1,22 +1,29 @@
 "use strict"
 
-const config = require('../config/config.js');
-const db = config.db;
-const {Schema} = db.Schema;
+const mongoose = require("mongoose");
 
-const todoSchema = new Schema({
-    todoContent: {
-        type: String,
-        required: true,
-        trim: true,
-        minLength: 2
+const todoSchema = new mongoose.Schema({
+        todo: {
+            type: String,
+            required: true,
+            trim: true,
+            minLength: 2
+        },
+        status: {
+            type: Boolean,
+            default: false
+        },
+        user_id: {
+            type: String,
+            required: true
+        }
     },
-    todoStatus: {
-        type: Boolean,
-        default:false
+    {
+        timestamps: true,
+        versionKey: false
     }
-});
+);
 
-const Todo = mongoose.model('Todo', todoSchema);
+const Todo = mongoose.model('Todo', todoSchema, 'list');
 
 module.exports = Todo;
