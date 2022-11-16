@@ -43,17 +43,17 @@ class DatabaseManager {
         }
     }
 
-    async update(data, id) {
+    async update(data, credentials) {
         try {
-            return await this.database.update(data, id);
+            return await this.database.update(data, credentials);
         } catch (e) {
             throw e;
         }
     }
 
-    async destroy(id) {
+    async destroy(credentials) {
         try {
-            return await this.database.destroy(id);
+            return await this.database.destroy(credentials);
         } catch (e) {
             throw e;
         }

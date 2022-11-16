@@ -21,6 +21,7 @@ class AuthController {
         }
 
         if (!existingUser || existingUser.password !== password) {
+            console.log(existingUser.password)
             return res
                 .status(409)
                 .json({

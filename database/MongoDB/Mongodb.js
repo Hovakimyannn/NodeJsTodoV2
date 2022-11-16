@@ -27,14 +27,14 @@ class Mongodb {
      */
     async read(credentials = null) {
         try {
-            if (credentials) {
+            if (!credentials.user_id) {
                 try {
                     return await this.model.findOne(credentials);
                 } catch (e) {
                     return 'not found';
                 }
             } else {
-                return await this.model.find();
+                return await this.model.find(credentials);
             }
         } catch (e) {
             throw e;
@@ -43,14 +43,14 @@ class Mongodb {
 
     /**
      * @param data
-     * @param id
+     * @param credentials
      *
      * @returns {Promise<*>}
      */
-    async update(data, id) {
+    async update(data, credentials) {
         try {
             await this.model.updateOne(
-                {_id: id},
+                credentials,
                 {$set: data}
             );
             return this.model;
@@ -60,13 +60,13 @@ class Mongodb {
     }
 
     /**
-     * @param id
+     * @param credentials
      *
      * @returns {Promise<void>}
      */
-    async destroy(id) {
+    async destroy(credentials) {
         try {
-            await this.model.deleteOne({_id: id});
+            await this.model.deleteOne(credentials);
         } catch (e) {
             throw e;
         }

@@ -7,23 +7,32 @@ const dataBaseManager = new DatabaseManager(Todo);
 class ListController {
     async get(req, res) {
         try {
-            res.json(await dataBaseManager.get());
+            res.json(await dataBaseManager.getByCredentials(
+                {
+                    user_id: req.user.userId
+                }
+            ));
         } catch (e) {
-            console.log(e);
             res.status(500).json('Something went wrong!');
         }
     }
 
     async getById(req, res) {
         try {
-            res.json(await dataBaseManager.getByCredentials({_id: req.params.id}));
+            res.json(await dataBaseManager.getByCredentials(
+                {
+                    _id: req.params.id,
+                    user_id: req.user.userId
+                }
+            ));
         } catch (e) {
             res.status(500).json('Something went wrong!');
         }
     }
 
     async create(req, res) {
-        const data = req.body;
+        let data = req.body;
+        data['user_id'] = req.user.userId;
         if (data.status === undefined) {
             data.status = false;
         }
@@ -39,7 +48,13 @@ class ListController {
 
     async update(req, res) {
         try {
-            res.json(await dataBaseManager.update(req.body, req.params.id));
+            res.json(await dataBaseManager.update(
+                req.body,
+                {
+                    _id: req.params.id,
+                    user_id: req.user.userId
+                }
+            ));
         } catch (e) {
             res.status(500).json('Something went wrong!');
         }
@@ -47,7 +62,12 @@ class ListController {
 
     async destroy(req, res) {
         try {
-            res.json(await dataBaseManager.destroy(req.params.id));
+            res.json(await dataBaseManager.destroy(
+                {
+                    _id: req.params.id,
+                    user_id: req.user.userId
+                }
+            ));
         } catch (e) {
             res.status(500).json('Something went wrong!');
         }
