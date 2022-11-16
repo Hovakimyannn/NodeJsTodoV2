@@ -54,4 +54,4 @@ class ListController {
     }
 }
 
-module.exports = ListController
+module.exports = ListController;

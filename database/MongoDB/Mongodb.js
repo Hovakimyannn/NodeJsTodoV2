@@ -73,4 +73,4 @@ class Mongodb {
     }
 }
 
-module.exports = Mongodb
+module.exports = Mongodb;

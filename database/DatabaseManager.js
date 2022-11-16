@@ -60,4 +60,4 @@ class DatabaseManager {
     }
 }
 
-module.exports = DatabaseManager
+module.exports = DatabaseManager;
