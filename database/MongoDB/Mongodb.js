@@ -1,7 +1,10 @@
 "use strict"
 
-class Mongodb {
+const DatabaseInterface = require('./DatabaseInterface.js');
+
+class Mongodb extends DatabaseInterface {
     constructor(model) {
+        super();
         this.model = model;
     }
 
@@ -11,11 +14,9 @@ class Mongodb {
      * @returns {Promise<*>}
      */
     async create(data) {
-        let todo = new this.model(data);
         try {
-            return todo.save();
+            return new this.model(data).save();
         } catch (e) {
-            console.log(e);
             throw e;
         }
     }

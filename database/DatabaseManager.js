@@ -38,7 +38,6 @@ class DatabaseManager {
         try {
             return await this.database.create(data);
         } catch (e) {
-            console.log(e);
             throw e;
         }
     }

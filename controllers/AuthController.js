@@ -3,6 +3,7 @@
 const DatabaseManager = require('../database/DatabaseManager.js');
 const User = require('../models/user.model.js');
 const jwt = require("jsonwebtoken");
+const e = require("express");
 const dataBaseManager = new DatabaseManager(User);
 
 class AuthController {
@@ -11,6 +12,7 @@ class AuthController {
         let existingUser;
         try {
             existingUser = await dataBaseManager.getByCredentials({email: email});
+            if (!existingUser) throw new Error();
         } catch (e) {
             return res
                 .status(409)
@@ -87,21 +89,6 @@ class AuthController {
                     userId: newUser.id,
                     email: newUser.email, token: token
                 },
-            });
-    }
-
-    async logout(req, res) {
-        const authHeader = req.headers["authorization"];
-        jwt.sign(
-            authHeader,
-            "Hovakimyannn",
-            {expiresIn: 1},
-            (logout, err) => {
-                if (logout) {
-                    res.send({msg: 'You have been Logged Out'});
-                } else {
-                    res.send({msg: 'Error'});
-                }
             });
     }
 }

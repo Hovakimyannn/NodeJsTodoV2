@@ -6,7 +6,7 @@ const authentication = require('./routes/auth.js');
 const app = express();
 const bodyParser = require('body-parser');
 const auth = require('./routes/middlewares/Auth.js');
-const Database = require('./database/DatabaseManager.js')
+const Database = require('./database/DatabaseManager.js');
 
 const port = 3000;
 
