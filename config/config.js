@@ -1,8 +1,11 @@
 'use strict'
 
+const dotenv = require('dotenv');
+dotenv.config();
 const DB_CONNECTION_NAME = 'mongoose';
 const DB_DATABASE = require(DB_CONNECTION_NAME);
-const URI = "mongodb+srv://hovakimyannn:hovakimyannn@cluster0.2j1uvna.mongodb.net/todo?retryWrites=true&w=majority";
+const URI = process.env.MONGO_CLIENT_URI;
+
 
 module.exports = {
     URI,

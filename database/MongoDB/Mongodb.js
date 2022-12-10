@@ -1,10 +1,7 @@
 "use strict"
 
-const DatabaseInterface = require('./DatabaseInterface.js');
-
-class Mongodb extends DatabaseInterface {
+class Mongodb{
     constructor(model) {
-        super();
         this.model = model;
     }
 
